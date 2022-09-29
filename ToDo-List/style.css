@@ -1,0 +1,150 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: url(./assets/background/seamless-background-textures-21-780x780.jpeg);
+	height: 150vh;
+}
+
+/* Dashboard wrapper style and structure */
+.dashboard-Wrapper {
+	width: 100%;
+	padding: 1rem;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: rgb(232, 232, 232);
+	border-bottom: 1px groove black;
+	border-top: 2px groove black;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+	/* position: fixed; */
+}
+/* New Task Input */
+.input_NewTask-Wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	text-align: center;
+	width: 20%;
+}
+.labelNewTaskInputStyle {
+	border-bottom: 1px solid black;
+	width: 100%;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.input_NewTask-Wrapper > input {
+	padding: 0.1rem;
+	border-radius: 10px;
+	outline: none;
+	border-width: thin;
+	box-shadow: rgba(84, 84, 84, 0.25) 0px 1px 5px;
+	border-color: snow;
+}
+.newTaskInputStyle {
+	text-align: center;
+	width: 100%;
+}
+.submitNewTaskStyle {
+	width: 20%;
+	outline: none;
+	cursor: pointer;
+	transition: all 420ms ease-in-out;
+}
+.submitNewTaskStyle:hover {
+	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+		rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.submitNewTaskStyle:active {
+	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+		rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+/* Filter List Buttons */
+
+.filter_Tasks-Wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+/* Remove Completed Tasks Button */
+.removeCompletedTasksStyle {
+	padding: 1rem;
+	border-radius: 10px;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+	border: none;
+	cursor: pointer;
+	transition: all 420ms ease-in-out;
+}
+
+.removeCompletedTasksStyle:hover {
+	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+		rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.removeCompletedTasksStyle:active {
+	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+		rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+/* Save/Load List of Tasks buttons*/
+.save_loadTasks-Wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.save-load_Buttons {
+	padding: 0.25rem;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	transition: all 420ms ease-in-out;
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+.save-load_Buttons:hover {
+	box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+		rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.save-load_Buttons:active {
+	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+		rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+/* Main Content - List of Tasks  */
+.title_and_list_container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2.5rem;
+	width: fit-content;
+	margin: auto;
+	background-color: rgb(232, 232, 232);
+	border-bottom: 1px groove black;
+	border-right: 1px groove black;
+	border-left: 1px groove black;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.listTitle_Input {
+	margin-top: 1rem;
+	text-align: center;
+	padding: 0.5rem;
+	font-size: 1rem;
+	width: 50%;
+	border-radius: 50px;
+	border: none;
+}
+
+.taskList-Wrapper {
+	padding: 0rem 2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 1.5rem;
+}

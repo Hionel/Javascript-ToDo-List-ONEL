@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>List of tasks</title>
+		<link
+			rel="shortcut icon"
+			href="./assets/favicon/to-do-list.png"
+			type="image/x-icon"
+		/>
+		<link rel="stylesheet" href="./style.css" />
+		<script src="./script.js" defer></script>
+	</head>
+	<body>
+		<header class="dashboard-Wrapper">
+			<div class="pageIcon-Wrapper">
+				<img src="./assets/Icons/to-do-list.png" alt="NoListToDo" />
+			</div>
+			<div class="input_NewTask-Wrapper">
+				<label for="newTask" class="labelNewTaskInputStyle"
+					>Insert a new task below</label
+				>
+				<input
+					type="text"
+					name="newTask"
+					id="inputNewTask"
+					placeholder="Task's title"
+					class="newTaskInputStyle"
+					maxlength="55"
+				/>
+				<input
+					type="button"
+					value="Add"
+					name="submitNewTask"
+					id="submitNewTask"
+					class="submitNewTaskStyle"
+				/>
+			</div>
+			<div class="filter_Tasks-Wrapper">
+				<label for="filterList-AllTasks">
+					<input type="radio" name="checkbox_filterList" id="filterList" />
+					All
+				</label>
+				<label for="filterList-CompletedTasks">
+					<input type="radio" name="checkbox_filterList" id="filterList" />
+					Completed
+				</label>
+				<label for="filterList-IncompletedTasks">
+					<input type="radio" name="checkbox_filterList" id="filterList" />
+					Incompleted
+				</label>
+			</div>
+			<div class="remove_CompletedTasks-Wrapper">
+				<input
+					type="button"
+					value="Remove Completed"
+					name="removeCompletedTasks"
+					id="removeCompletedTasks"
+					class="removeCompletedTasksStyle"
+				/>
+			</div>
+			<div class="save_loadTasks-Wrapper">
+				<input
+					type="button"
+					value="Save List"
+					id="saveList"
+					class="save-load_Buttons"
+				/>
+				<input
+					type="button"
+					value="Load List"
+					id="loadList"
+					class="save-load_Buttons"
+				/>
+			</div>
+		</header>
+		<main class="title_and_list_container">
+			<input
+				type="text"
+				name="listTitle"
+				id="inputListTitle"
+				placeholder="Insert List Title"
+				class="listTitle_Input"
+			/>
+			<section class="taskList-Wrapper">
+				<ul id="listOfTasks" class="list_TasksWrapper"></ul>
+			</section>
+		</main>
+		<footer></footer>
+	</body>
+</html>
