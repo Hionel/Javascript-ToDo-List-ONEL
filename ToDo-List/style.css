@@ -7,6 +7,7 @@
 body {
 	background: url(./assets/background/seamless-background-textures-21-780x780.jpeg);
 	height: 150vh;
+	/* overflow: hidden; */
 }
 
 /* Dashboard wrapper style and structure */
@@ -21,7 +22,7 @@ body {
 	border-top: 2px groove black;
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-	/* position: fixed; */
+	z-index: 100;
 }
 /* New Task Input */
 .input_NewTask-Wrapper {
@@ -130,6 +131,10 @@ body {
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 	padding: 1rem;
+	transform: translateY(-100%);
+	z-index: -100;
+	position: relative;
+	transition: all 750ms ease-in-out;
 }
 
 .listTitle_Input {
@@ -184,4 +189,9 @@ body {
 .taskListItem > button:active {
 	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
 		rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.taskListItem > input {
+	background: transparent;
+	border: none;
 }
