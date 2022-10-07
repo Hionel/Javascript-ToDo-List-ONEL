@@ -23,6 +23,7 @@ body {
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 	z-index: 100;
+	/* position: absolute; */
 }
 /* New Task Input */
 .input_NewTask-Wrapper {
@@ -131,10 +132,8 @@ body {
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
 		rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 	padding: 1rem;
-	transform: translateY(-100%);
-	z-index: -100;
-	position: relative;
 	transition: all 750ms ease-in-out;
+	display: none;
 }
 
 .listTitle_Input {
@@ -170,10 +169,15 @@ body {
 	border: none;
 	padding: 0.55rem;
 	border-radius: 10px;
+	width: fit-content;
+	cursor: move;
 }
-
+.taskTitle_insideList {
+	width: fit-content;
+}
 .taskListItem > button {
 	padding: 0.25rem;
+	width: 3rem;
 	border-radius: 50px;
 	outline: none;
 	border-width: thin;
@@ -192,6 +196,16 @@ body {
 }
 
 .taskListItem > input {
+	padding: 0.25rem;
+
 	background: transparent;
 	border: none;
+	pointer-events: none;
+	outline-color: black;
+	width: auto;
+}
+/* Drag n drop styling */
+
+.dragging-state {
+	opacity: 0.5;
 }
