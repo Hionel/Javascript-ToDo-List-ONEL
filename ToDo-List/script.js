@@ -8,7 +8,7 @@ console.log(filterRadios);
 
 addTaskButton.addEventListener("click", function () {
 	let newTaskTitle = document.getElementById("inputNewTask").value;
-	if (newTaskTitle && newTaskTitle.trim().length != 0) {
+	if (newTaskTitle && newTaskTitle.trim().length !== 0) {
 		filterRadios[0].checked = true;
 		let ListItem = document.createElement("li");
 		ListItem.classList.add("taskListItem");
@@ -31,7 +31,12 @@ addTaskButton.addEventListener("click", function () {
 			e.preventDefault();
 			const dropzone = dragDrop(listOfTasks, e.clientY);
 			const draggableItemList = document.querySelector(".dragging-state");
-			listOfTasks.appendChild(draggableItemList);
+
+			if (dropzone == null) {
+				listOfTasks.appendChild(draggableItemList);
+			} else {
+				listOfTasks.insertBefore(draggableItemList, dropzone);
+			}
 		});
 
 		let taskTitleText = document.createElement("input");
@@ -48,7 +53,7 @@ addTaskButton.addEventListener("click", function () {
 				taskTitleText.style.pointerEvents = "auto";
 				taskTitleText.focus();
 			} else if (editTitleButton.innerText === "Save") {
-				if (taskTitleText.value.trim().length != 0) {
+				if (taskTitleText.value.trim().length !== 0) {
 					taskTitleText.readOnly = true;
 					editTitleButton.innerText = "Edit";
 					taskTitleText.style.pointerEvents = "none";
@@ -155,7 +160,7 @@ removeCompletedButton.addEventListener("click", () => {
 
 function dragDrop(container, vertical) {
 	const draggableElements = [
-		...container.querySelectorAll(".draggable:not(.dragging-state"),
+		...container.querySelectorAll(".draggable:not(.dragging-state)"),
 	];
 	return draggableElements.reduce((closest, child) => {
 		const box = child.getBoundingClientRect();
