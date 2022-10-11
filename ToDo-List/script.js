@@ -13,31 +13,6 @@ addTaskButton.addEventListener("click", function () {
 		let ListItem = document.createElement("li");
 		ListItem.classList.add("taskListItem");
 		ListItem.setAttribute("draggable", true);
-		// Drag n Drop Sortable list of tasks
-
-		const draggablesTasks = document.querySelectorAll(".taskListItem");
-
-		draggablesTasks.forEach((task) => {
-			task.addEventListener("dragstart", () => {
-				task.classList.add("dragging-state");
-			});
-
-			task.addEventListener("dragend", () => {
-				task.classList.remove("dragging-state");
-			});
-		});
-
-		listOfTasks.addEventListener("dragover", (e) => {
-			e.preventDefault();
-			const dropzone = dragDrop(listOfTasks, e.clientY);
-			const draggableItemList = document.querySelector(".dragging-state");
-
-			if (dropzone == null) {
-				listOfTasks.appendChild(draggableItemList);
-			} else {
-				listOfTasks.insertBefore(draggableItemList, dropzone);
-			}
-		});
 
 		let taskTitleText = document.createElement("input");
 		taskTitleText.classList.add("taskTitle_insideList");
@@ -99,6 +74,87 @@ addTaskButton.addEventListener("click", function () {
 		ListItem.appendChild(taskTitleText);
 		listOfTasks.appendChild(ListItem);
 		listOfTasksContainer.style.display = "flex";
+
+		// Dnd
+		const taskListItems = document.querySelectorAll(".taskListItem");
+		let draggedEl = null;
+		let dropTargetEl = null;
+		// let draggedselected = null;
+		for (let listItem of taskListItems) {
+			listItem.addEventListener("dragstart", (e) => {
+				draggedEl = e.target;
+				// console.log(draggedEl);
+				for (let notDragged of taskListItems) {
+					if (notDragged !== draggedEl) {
+						notDragged.classList.add("nodrag-hint");
+					}
+					// else {
+					// 	draggedselected = draggedEl;
+					// 	console.log(draggedselected);
+					// }
+				}
+			});
+
+			listItem.addEventListener("dragenter", (e) => {
+				dropTargetEl = e.target;
+				for (let notDragged of taskListItems) {
+					if (notDragged !== dropTargetEl) {
+						listItem.classList.add("drag-active");
+					}
+				}
+			});
+
+			listItem.addEventListener("dragleave", () => {
+				listItem.classList.remove("drag-active");
+			});
+
+			listItem.addEventListener("dragend", () => {
+				for (let el of taskListItems) {
+					el.classList.remove("drag-active");
+					el.classList.remove("nodrag-hint");
+				}
+			});
+
+			listItem.addEventListener("dragover", (e) => {
+				e.preventDefault();
+			});
+
+			listItem.addEventListener("drop", (e) => {
+				e.preventDefault();
+
+				console.log(draggedEl);
+				console.log(dropTargetEl);
+				if (dropTargetEl != draggedEl) {
+					let allItems = document.querySelectorAll(".taskListItem");
+					let dragPosition = 0;
+					let dropPostion = 0;
+					for (let i = 0; i < allItems.length; i++) {
+						if (draggedEl === allItems[i]) {
+							dragPosition = i;
+							console.log(dragPosition);
+						}
+						if (dropTargetEl === allItems[i]) {
+							dropPostion = i;
+							console.log(dropPostion);
+						}
+					}
+					for (let item of taskListItems) {
+						item.remove();
+					}
+					for (let i = 0; i < allItems.length; i++) {
+						if (i !== dragPosition && i !== dropPostion) {
+							listOfTasks.appendChild(allItems[i]);
+						}
+						if (i === dragPosition) {
+							listOfTasks.appendChild(dropTargetEl);
+						}
+						if (i === dropPostion) {
+							listOfTasks.appendChild(draggedEl);
+						}
+					}
+				}
+			});
+		}
 	} else {
 		alert("No Task");
 	}
@@ -156,20 +212,4 @@ removeCompletedButton.addEventListener("click", () => {
 	}
 });
 
-// Function for dropping tasks on drag n drop
-
-function dragDrop(container, vertical) {
-	const draggableElements = [
-		...container.querySelectorAll(".draggable:not(.dragging-state)"),
-	];
-	return draggableElements.reduce((closest, child) => {
-		const box = child.getBoundingClientRect();
-		const offset = vertical - box.top - box.height / 2;
-		console.log(box);
-		if (offset < 0 && offset > closest.offset) {
-			return { offset: offset, element: child };
-		} else {
-			return closest;
-		}
-	}, { offset: Number.NEGATIVE_INFINITY }.element);
-}
+// function dnd(list) {}
