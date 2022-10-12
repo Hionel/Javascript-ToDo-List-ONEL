@@ -88,10 +88,6 @@ addTaskButton.addEventListener("click", function () {
 					if (notDragged !== draggedEl) {
 						notDragged.classList.add("nodrag-hint");
 					}
-					// else {
-					// 	draggedselected = draggedEl;
-					// 	console.log(draggedselected);
-					// }
 				}
 			});
 
@@ -120,38 +116,49 @@ addTaskButton.addEventListener("click", function () {
 			});
 
 			listItem.addEventListener("drop", (e) => {
-				e.preventDefault();
-
-				console.log(draggedEl);
-				console.log(dropTargetEl);
+				// console.log(draggedEl);
+				// console.log(dropTargetEl);
+				console.log("dropped");
 				if (dropTargetEl != draggedEl) {
 					let allItems = document.querySelectorAll(".taskListItem");
 					let dragPosition = 0;
-					let dropPostion = 0;
+					let dropPosition = 0;
+					console.log(allItems);
+					let newSortList = [];
+					// Determine drag and drop items positions
 					for (let i = 0; i < allItems.length; i++) {
-						if (draggedEl === allItems[i]) {
+						if (allItems[i] === draggedEl) {
 							dragPosition = i;
 							console.log(dragPosition);
 						}
-						if (dropTargetEl === allItems[i]) {
-							dropPostion = i;
-							console.log(dropPostion);
+						if (allItems[i] === dropTargetEl) {
+							dropPosition = i;
+							console.log(dropPosition);
 						}
 					}
+					// Delete old list
 					for (let item of taskListItems) {
 						item.remove();
 					}
+					// Insert list in the new order inside the array
 					for (let i = 0; i < allItems.length; i++) {
-						if (i !== dragPosition && i !== dropPostion) {
-							listOfTasks.appendChild(allItems[i]);
-						}
 						if (i === dragPosition) {
-							listOfTasks.appendChild(dropTargetEl);
-						}
-						if (i === dropPostion) {
-							listOfTasks.appendChild(draggedEl);
+							newSortList.push(dropTargetEl);
+						} else if (i === dropPosition) {
+							newSortList.push(draggedEl);
+						} else {
+							newSortList.push(allItems[i]);
 						}
 					}
+					// Insert list in new order after dnd
+					for (let i = 0; i < newSortList.length; i++) {
+						listOfTasks.append(newSortList[i]);
+						console.log(newSortList[i]);
+					}
+					e.preventDefault();
+					e.stopImmediatePropagation();
+				} else {
+					return;
 				}
 			});
 		}
