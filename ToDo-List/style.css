@@ -227,3 +227,7 @@ body {
 .drag-active {
 	background-color: red;
 }
+
+.drag-debug {
+	opacity: 0.5;
+}

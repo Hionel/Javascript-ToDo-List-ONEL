@@ -4,7 +4,7 @@ const listOfTasksContainer = document.getElementById(
 	"title_and_list_container"
 );
 const filterRadios = document.getElementsByName("checkbox_filterList");
-console.log(filterRadios);
+let nodeListOfTasks = null;
 
 addTaskButton.addEventListener("click", function () {
 	let newTaskTitle = document.getElementById("inputNewTask").value;
@@ -70,98 +70,12 @@ addTaskButton.addEventListener("click", function () {
 		ListItem.appendChild(completedTaskCheckbox);
 		ListItem.appendChild(editTitleButton);
 		ListItem.appendChild(removeTaskButton);
-
 		ListItem.appendChild(taskTitleText);
 		listOfTasks.appendChild(ListItem);
 		listOfTasksContainer.style.display = "flex";
-
-		// Dnd
-		const taskListItems = document.querySelectorAll(".taskListItem");
-		let draggedEl = null;
-		let dropTargetEl = null;
-		// let draggedselected = null;
-		for (let listItem of taskListItems) {
-			listItem.addEventListener("dragstart", (e) => {
-				draggedEl = e.target;
-				// console.log(draggedEl);
-				for (let notDragged of taskListItems) {
-					if (notDragged !== draggedEl) {
-						notDragged.classList.add("nodrag-hint");
-					}
-				}
-			});
-
-			listItem.addEventListener("dragenter", (e) => {
-				dropTargetEl = e.target;
-				for (let notDragged of taskListItems) {
-					if (notDragged !== dropTargetEl) {
-						listItem.classList.add("drag-active");
-					}
-				}
-			});
-
-			listItem.addEventListener("dragleave", () => {
-				listItem.classList.remove("drag-active");
-			});
-
-			listItem.addEventListener("dragend", () => {
-				for (let el of taskListItems) {
-					el.classList.remove("drag-active");
-					el.classList.remove("nodrag-hint");
-				}
-			});
-
-			listItem.addEventListener("dragover", (e) => {
-				e.preventDefault();
-			});
-
-			listItem.addEventListener("drop", (e) => {
-				// console.log(draggedEl);
-				// console.log(dropTargetEl);
-				console.log("dropped");
-				if (dropTargetEl != draggedEl) {
-					let allItems = document.querySelectorAll(".taskListItem");
-					let dragPosition = 0;
-					let dropPosition = 0;
-					console.log(allItems);
-					let newSortList = [];
-					// Determine drag and drop items positions
-					for (let i = 0; i < allItems.length; i++) {
-						if (allItems[i] === draggedEl) {
-							dragPosition = i;
-							console.log(dragPosition);
-						}
-						if (allItems[i] === dropTargetEl) {
-							dropPosition = i;
-							console.log(dropPosition);
-						}
-					}
-					// Delete old list
-					for (let item of taskListItems) {
-						item.remove();
-					}
-					// Insert list in the new order inside the array
-					for (let i = 0; i < allItems.length; i++) {
-						if (i === dragPosition) {
-							newSortList.push(dropTargetEl);
-						} else if (i === dropPosition) {
-							newSortList.push(draggedEl);
-						} else {
-							newSortList.push(allItems[i]);
-						}
-					}
-					// Insert list in new order after dnd
-					for (let i = 0; i < newSortList.length; i++) {
-						listOfTasks.append(newSortList[i]);
-						console.log(newSortList[i]);
-					}
-					e.preventDefault();
-					e.stopImmediatePropagation();
-				} else {
-					return;
-				}
-			});
-		}
+		// Creating nodelist of task items
+		nodeListOfTasks = document.querySelectorAll(".taskListItem");
+		dragNdrop(nodeListOfTasks);
 	} else {
 		alert("No Task");
 	}
@@ -219,4 +133,96 @@ removeCompletedButton.addEventListener("click", () => {
 	}
 });
 
-// function dnd(list) {}
+// DND
+function dragNdrop(list) {
+	let draggedEl = null;
+	let dropTargetEl = null;
+	for (let listItem of list) {
+		listItem.addEventListener("dragstart", (e) => {
+			draggedEl = e.target;
+			draggedEl.classList.add("drag-debug");
+			console.log(draggedEl);
+			for (let notDragged of list) {
+				if (notDragged !== draggedEl) {
+					notDragged.classList.add("nodrag-hint");
+				}
+			}
+		});
+
+		listItem.addEventListener("dragenter", (e) => {
+			dropTargetEl = e.target;
+			for (let notDragged of list) {
+				if (notDragged !== dropTargetEl) {
+					listItem.classList.add("drag-active");
+				}
+			}
+		});
+
+		listItem.addEventListener("dragleave", () => {
+			listItem.classList.remove("drag-active");
+		});
+
+		listItem.addEventListener("dragend", () => {
+			for (let el of list) {
+				el.classList.remove("drag-active");
+				el.classList.remove("nodrag-hint");
+				el.classList.remove("drag-debug");
+			}
+			console.log(draggedEl);
+			console.log(dropTargetEl);
+		});
+
+		listItem.addEventListener("dragover", (e) => {
+			e.preventDefault();
+		});
+
+		listItem.addEventListener("drop", (e) => {
+			console.log("dropped");
+			e.stopImmediatePropagation();
+			console.log(draggedEl);
+			if (dropTargetEl != draggedEl) {
+				let allItems = document.querySelectorAll(".taskListItem");
+				let dragPosition = null;
+				let dropPosition = null;
+				let anything = draggedEl;
+				console.log(allItems);
+				let newSortList = [];
+				// Determine drag and drop items positions
+				for (let i = 0; i < allItems.length; i++) {
+					console.log(allItems[i]);
+					console.log(anything);
+					if (allItems[i] == draggedEl) {
+						dragPosition = i;
+						console.log("Drag Pos: " + dragPosition);
+					}
+					if (allItems[i] == dropTargetEl) {
+						dropPosition = i;
+						console.log("Drop pos: " + dropPosition);
+					}
+				}
+				// Delete old list
+				for (let item of list) {
+					item.remove();
+				}
+				// Insert list in the new order inside the array
+				for (let i = 0; i < allItems.length; i++) {
+					if (i === dragPosition) {
+						newSortList.push(dropTargetEl);
+					} else if (i === dropPosition) {
+						newSortList.push(draggedEl);
+					} else {
+						newSortList.push(allItems[i]);
+					}
+				}
+				// Insert list in new order after dnd
+				for (let i = 0; i < newSortList.length; i++) {
+					listOfTasks.append(newSortList[i]);
+					console.log(newSortList[i]);
+				}
+				e.preventDefault();
+			} else {
+				return;
+			}
+		});
+	}
+}
